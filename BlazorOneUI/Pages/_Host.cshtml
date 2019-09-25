@@ -1,0 +1,31 @@
+﻿@page "/"
+@namespace BlazorOneUI.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blazor OneUI</title>
+    <base href="~/" />
+    <!--
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    -->
+    <!-- Stylesheets -->
+    <!-- Fonts and OneUI framework-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+    <link rel="stylesheet" id="css-main" href="~/css/oneui.min.css">
+
+</head>
+<body>
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    </app>
+
+    <script src="~/js/oneui.core.min.js"></script>
+    <script src="~/js/oneui.app.min.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
