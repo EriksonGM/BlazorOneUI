@@ -1,5 +1,62 @@
-﻿<h3>Table</h3>
+﻿@page "/table"
+@using System.Data
+@using BlazorOneUI.Components
+
+<p>Total : @Memoria.Count Linhas</p>
+
+@foreach (var c in lista)
+{
+    <KPI Text="@c.Nome" Value="@c.Telefone" />
+}
+<p>
+    <button @onclick="listar">Copiar</button>
+</p>
+
 
 @code {
+    DataTable dt = new DataTable();
+
+    DataTable dt2 = new DataTable();
+
+    List<Contacto> Memoria = new List<Contacto>
+    {
+        new Contacto{Nome="Erikson Melgarejo",Telefone="929164344",Email="eriksonlove@gmail.com"},
+        new Contacto{Nome="Micaela Chela",Telefone="929179099",Email="micaela.calonji@gmail.com"},
+        new Contacto{Nome="Roxangela Aguilera",Telefone="921458635",Email="roxangela.aguilera@gmail.com"},
+        new Contacto{Nome="Margarita Melgarejo",Telefone="926860084",Email="margarita.melgarejo@gmail.com"},
+        new Contacto{Nome="Angel Aguilera",Telefone="923410256",Email="angel.agilera@gmail.com"}
+    };
+
+    List<Contacto> lista = new List<Contacto>();
+
+
+
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public async Task listar()
+    {
+        Random r = new Random();
+
+        lista.Add(Memoria[r.Next(1, 5)]);
+
+        //foreach(var c in Memoria)
+        //{
+        //    await Task.Delay(1000);
+        //    lista.Add(c);
+        //}
+    }
+
+    public class Contacto
+    {
+        public string Nome { get; set; }
+
+        public string Telefone { get; set; }
+
+        public string Email { get; set; }
+    }
 
 }

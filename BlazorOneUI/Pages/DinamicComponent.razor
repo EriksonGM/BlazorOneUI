@@ -1,0 +1,155 @@
+﻿@page "/dinamic-component"
+@using Models;
+
+<h3>DinamicComponent</h3>
+
+<div class="row">
+    <div class="col-4">
+        <form @onsubmit="AddControl">
+            <div class="form-group">
+                <label>Display Name</label>
+                <input required @bind="comp.Display" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Component Type</label>
+                <select class="form-control" @bind="comp.ComponentType">
+                    <option value="1">TextBox</option>
+                    <option value="2">CheckBox</option>
+                    <option value="3">DropDown</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Pattern</label>
+                <input @bind="comp.Pattern" class="form-control" />
+            </div>
+            <div class="form-group">
+
+                <input id="IsRequired" type="checkbox" @bind="comp.IsRequired" /><label for="IsRequired">Is Required</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar  -  @tentativas</button>
+        </form>
+    </div>
+    <div class="col-8">
+        <form @onsubmit="Enviar">
+            @foreach (var c in componentes)
+            {
+                switch (c.ComponentType)
+                {
+                    case 1:
+                        <div class="form-group">
+                            <label>@c.Display</label>
+                            <input class="form-control" required="@c.IsRequired" @bind="c.Value"/>
+                        </div>
+
+                        break;
+
+                    case 2:
+
+                        break;
+
+                    case 3:
+
+                        break;
+
+                    default:
+                        <h2>Sem componentes</h2>
+                        break;
+                }
+            }
+            <p>
+                <button class="btn btn-primary pull-right">Enviar  -  @tentativas</button>
+            </p>
+            
+        </form>
+        <hr />
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Display Name</th>
+                    <th>Content Type</th>
+                    <th>Value</th>
+                    <th>Pattern</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in componentes)
+                {
+                <tr>
+                    <td>@c.Display</td>
+                    <td>@c.ComponentType</td>
+                    <td>@c.Value</td>
+                    <td>@c.Pattern</td>
+                    <td>@c.IsRequired</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    List<Component> componentes = new List<Component>();
+
+    Component comp = new Component();
+
+    int tentativas = 0;
+
+    string value;
+
+    string display;
+
+    ComponentTypeEnum componentType;
+
+    bool isRequired;
+
+    public void CleanForm()
+    {
+        value = "";
+
+        display = "";
+
+        componentType = ComponentTypeEnum.Textbox;
+    }
+
+    public void AddControl()
+    {
+        componentes.Add(comp);
+
+        CleanForm();
+    }
+
+    protected override void OnInitialized()
+    {
+
+
+        componentes.Add(new Component
+        {
+            ComponentType = 1,
+            Display = "Nome",
+            IsRequired = true
+        });
+
+        componentes.Add(new Component
+        {
+            ComponentType = 1,
+            Display = "Telefone",
+            Pattern = "\\d{9}",
+            IsRequired = true
+        });
+
+        componentes.Add(new Component
+        {
+            ComponentType = 1,
+            Display = "Email",
+            IsRequired = true
+        });
+    }
+
+    public async Task Enviar()
+    {
+        await Task.Delay(0);
+        tentativas++;
+    }
+}
+
